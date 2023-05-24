@@ -10,24 +10,33 @@ import net.swofty.utility.RedisUtils;
 import org.json.JSONObject;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 
 public class Main {
+    public static int PORT = 0;
+
     public static void main(String[] args) throws IOException {
 		/*
 		Start API
 		 */
-        SwoftyAPI.start(4000);
 
+        String port = JOptionPane.showInputDialog(null, "Enter your preferred Port.", "");
         try {
-            UIManager.setLookAndFeel(
-                    UIManager.getCrossPlatformLookAndFeelClassName());
-        } catch (Exception ignored) {
+            PORT = Integer.parseInt(port);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, port + " is not a valid port value. Using port 4000 by default.");
+            PORT = 4000;
         }
+
+        SwoftyAPI.start(PORT);
 
         ConsoleInterface co = new ConsoleInterface();
         co.hook();
         co.setVisible(true);
+
+        ConsoleInterface.out.info("Started SwoftyDatabse on PORT '");
 
 		/*
 		Testing
@@ -70,7 +79,7 @@ public class Main {
         innerData2.put("updateType", Entry.ValueCase.STRING_VALUE.toString());
         innerData2.put("updateValue", "fwefw");
         toSend2.put("data", innerData2);
-        ByteString receivedByteString2 = new ConnectionUtils("127.0.0.1", 4000).makeConnection(toSend2);
+        ByteString receivedByteString2 = new ConnectionUtils("127.0.0.1", PORT).makeConnection(toSend2);
 
 
         JSONObject toSend = new JSONObject();
@@ -79,7 +88,7 @@ public class Main {
         innerData.put("command", "GET");
         innerData.put("key", "user1");
         toSend.put("data", innerData);
-        ByteString receivedByteString = new ConnectionUtils("127.0.0.1", 4000).makeConnection(toSend);
+        ByteString receivedByteString = new ConnectionUtils("127.0.0.1", PORT).makeConnection(toSend);
         Document receivedDocument = Document.parseFrom(receivedByteString);
         System.out.println(receivedDocument);
         System.out.println(DocumentUtility.getValueForKey(receivedDocument, "username"));
@@ -91,7 +100,7 @@ public class Main {
         innerData3.put("command", "CONTAINS");
         innerData3.put("key", "user123");
         toSend3.put("data", innerData3);
-        ByteString receivedByteString3 = new ConnectionUtils("127.0.0.1", 4000).makeConnection(toSend3);
+        ByteString receivedByteString3 = new ConnectionUtils("127.0.0.1", PORT).makeConnection(toSend3);
         boolean contains = receivedByteString3.byteAt(0) == 1;
         System.out.println(contains);
     }

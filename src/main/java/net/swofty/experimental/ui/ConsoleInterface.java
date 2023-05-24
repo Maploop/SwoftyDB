@@ -1,6 +1,7 @@
 package net.swofty.experimental.ui;
 
 import java.awt.*;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import org.jfree.chart.*;
@@ -27,10 +28,21 @@ public class ConsoleInterface extends JFrame {
     private JButton stopAndExit;
 
     public ConsoleInterface() {
+        try {
+            UIManager.setLookAndFeel(
+                    UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (Exception ignored) {
+        }
+
         setTitle("Console Interface");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(800, 650);
         setLayout(new BorderLayout());
+        try {
+            setIconImage(ImageIO.read(getClass().getClassLoader().getResource("application_ico.png")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Left panel for system info
         JPanel systemPanel = new JPanel();
