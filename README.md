@@ -22,7 +22,7 @@ SwoftyDBWindowsInterface is a portable JAR application which allows for you to r
 
 ## Screenshots
 Here is a screenshot of how the UI looks when it is running!
-[INSERT IMG HERE]
+![image](https://github.com/Maploop/SwoftyDBWindowsInterface/assets/76199586/36ea7186-86de-425a-bfbe-f52306412cb5)
 
 ## License
 SwoftyDB is licensed under the permissive MIT license. Please see [`LICENSE.txt`](https://github.com/Swofty-Developments/SwoftyDB/blob/master/LICENSE.txt) for more information.
